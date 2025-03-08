@@ -1,17 +1,16 @@
 openapi: 3.0.0
 info:
-  title: My Flask CRUD API
+  title: Simple Flask CRUD API
   version: 1.0.0
-
 paths:
-  /api/users:
+  /users:
     get:
-      summary: Get all users
+      summary: Retrieve all users
       responses:
         '200':
-          description: Successful operation
+          description: A list of users
     post:
-      summary: Create a user
+      summary: Create a new user
       requestBody:
         required: true
         content:
@@ -26,4 +25,54 @@ paths:
       responses:
         '201':
           description: User created
-# ... and so on for other endpoints
+  /users/{id}:
+    get:
+      summary: Retrieve a user by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: User details
+        '404':
+          description: User not found
+    put:
+      summary: Update a user
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+      responses:
+        '200':
+          description: User updated
+        '404':
+          description: User not found
+    delete:
+      summary: Delete a user
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: User deleted
+        '404':
+          description: User not found
